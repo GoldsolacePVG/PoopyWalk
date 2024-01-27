@@ -11,11 +11,12 @@ public class MovementEnemy : MonoBehaviour
     public Transform frontController;
     public bool informationInFront;
     public bool facingRight = true;
+    public bool talking = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -23,11 +24,11 @@ public class MovementEnemy : MonoBehaviour
     {
         rb.velocity = new Vector2(velocity, rb.velocity.y);
         informationInFront = Physics2D.Raycast(frontController.position, transform.right, distanceInFront, front);
-    
+
         if (informationInFront)
         {
             Flip();
-        }    
+        }
     }
 
     public void Flip()

@@ -28,26 +28,39 @@ public class PlayerController : MonoBehaviour
         }else{
             animator.SetBool("Running", false);
         }
-        
+
         Vector3 position = player.transform.position;
         position.y = Mathf.Clamp(position.y, -2.0f, 4.0f);
         transform.position = position;
-        
+
         grounded = Physics2D.Raycast(this.transform.position, Vector2.down, 2.0f, groundMask.value);
         animator.SetBool("Flying", !grounded);
-        
+
         if (Input.GetKeyDown(KeyCode.Space) && fuel > 0.0f) {
             rb.velocity = new Vector2(rb.velocity.x, 6.5f);
             fuel -= 5.0f;
         }
     }
 
+
+    public void OnTriggerEnter2D(Collider2D coll)
+    {
+      if(coll.gameObject.tag == "door")
+      {
+        coll.gameObject.GetComponent<Animator>().SetTrigger("Arrival");
+        TimeScript.instance.stopTimer = true;
+      }
+    }
     public void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.layer == LayerMask.NameToLayer("Perk")) {
             Destroy(coll.gameObject);
             if (fuel < 100.0f) {
                 fuel += 100.0f - fuel;
             }
+        }
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Cork")) {
+            Destroy(coll.gameObject);
+                TimeScript.instance.levelOneCountdown += 5.0f;
         }
     }
 }

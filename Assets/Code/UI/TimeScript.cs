@@ -7,8 +7,12 @@ public class TimeScript : MonoBehaviour
 {
     public Text timerText;
     public float levelOneCountdown = 120.0f;
+    public bool stopTimer = false;
+    public static TimeScript instance;
     void Start() {
         UpdateTimer(levelOneCountdown);
+        if(instance == null)
+          instance = this;
     }
 
     private void UpdateTimer(float timer) {
@@ -20,8 +24,12 @@ public class TimeScript : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    private void GameOver(){
+
+    }
+
     void Update() {
-        if (levelOneCountdown > 0.0f) {
+        if (levelOneCountdown > 0.0f && !stopTimer) {
             levelOneCountdown -= Time.deltaTime;
             UpdateTimer(levelOneCountdown);
         }else{
