@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D coll)
     {
-      if(coll.gameObject.tag == "door")
+      if(coll.gameObject.tag == "Door")
       {
         coll.gameObject.GetComponent<Animator>().SetTrigger("Arrival");
         TimeScript.instance.stopTimer = true;
