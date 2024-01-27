@@ -746,7 +746,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -778,6 +778,9 @@ MonoBehaviour:
   player: {fileID: 1873660002}
   sprite: {fileID: 1873660006}
   animator: {fileID: 1873660005}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
   speed: 7
 --- !u!61 &1873660004
 BoxCollider2D:

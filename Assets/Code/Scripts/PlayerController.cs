@@ -7,8 +7,9 @@ public class PlayerController : MonoBehaviour
     public Transform player;
     public SpriteRenderer sprite;
     public Animator animator;
+    public LayerMask groundMask;
     public float speed = 7f;
-    private bool flying = false;
+    private bool grounded = false;
 
     void Update() {
         /*float horizontal = Input.GetAxis("Horizontal");
@@ -34,8 +35,9 @@ public class PlayerController : MonoBehaviour
         position.y = Mathf.Clamp(position.y, -2.0f, 4.0f);
         transform.position = position;
         
-        flying = Physics2D.Raycast(this.transform.position, Vector3.down, 2.5f, LayerMask.NameToLayer("Ground"));
-        animator.SetBool("Flying", flying);
+        Debug.DrawRay(this.transform.position, Vector3.down, Color.red);
+        grounded = Physics2D.Raycast(this.transform.position, Vector2.down, 2.0f, groundMask.value);
+        animator.SetBool("Flying", !grounded);
     }
 
     public void OnCollisionEnter2D(Collision2D coll) {
