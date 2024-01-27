@@ -23,6 +23,8 @@ public class MovementEnemy : MonoBehaviour
     {
         rb.velocity = new Vector2(velocity, rb.velocity.y);
         informationInFront = Physics2D.Raycast(frontController.position, transform.right, distanceInFront, front);
+
+        //Debug.DrawRay(frontController.position, transform.right * distanceInFront, Color.red);
     
         if (informationInFront)
         {
