@@ -45,20 +45,20 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D coll)
     {
-      if(coll.gameObject.tag == "Door")
+      if("Door" == coll.gameObject.tag)
       {
         coll.gameObject.GetComponent<Animator>().SetTrigger("Arrival");
         TimeScript.instance.stopTimer = true;
       }
     }
     public void OnCollisionEnter2D(Collision2D coll) {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Perk")) {
+        if ("Soda" == coll.gameObject.tag) {
             Destroy(coll.gameObject);
             if (fuel < 100.0f) {
                 fuel += 100.0f - fuel;
             }
         }
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Cork")) {
+        if ("Cork" == coll.gameObject.tag) {
             Destroy(coll.gameObject);
                 TimeScript.instance.levelOneCountdown += 5.0f;
         }

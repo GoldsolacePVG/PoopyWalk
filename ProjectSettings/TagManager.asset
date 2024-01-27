@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Door
+  - Soda
+  - Cork
+  - Paper
   layers:
   - Default
   - TransparentFX
