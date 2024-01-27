@@ -17,7 +17,7 @@ public class PresentationScript : MonoBehaviour {
             tempColor.a = Mathf.Clamp01(tempColor.a);
             logo.color = tempColor;
             if (logo.color.a >= 1.0f) {enableToStartCount = true;}
-        }else{Debug.LogError("Error charging");}
+        }else if(logo == null){Debug.LogError("Error charging");}
 
         if (enableToStartCount && !enableToDisappear) {
             countDown++;
