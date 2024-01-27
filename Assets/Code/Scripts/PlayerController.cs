@@ -8,13 +8,11 @@ public class PlayerController : MonoBehaviour
     public SpriteRenderer sprite;
     public Animator animator;
     public LayerMask groundMask;
-    public float speed = 7f;
+    public Rigidbody2D rb;
+    public float speed = 7f, fuel = 0.0f;
     private bool grounded = false;
 
     void Update() {
-        /*float horizontal = Input.GetAxis("Horizontal");
-        
-        player.Translate(Vector3.right * speed * horizontal * Time.deltaTime);*/
         if (Input.GetKey(KeyCode.A)) {
             this.transform.position += Vector3.left * speed * Time.deltaTime;
             sprite.flipX = true;
@@ -35,25 +33,20 @@ public class PlayerController : MonoBehaviour
         position.y = Mathf.Clamp(position.y, -2.0f, 4.0f);
         transform.position = position;
         
-        Debug.DrawRay(this.transform.position, Vector3.down, Color.red);
         grounded = Physics2D.Raycast(this.transform.position, Vector2.down, 2.0f, groundMask.value);
         animator.SetBool("Flying", !grounded);
+        
+        if (Input.GetKeyDown(KeyCode.Space) && fuel > 0.0f) {
+            rb.velocity = new Vector2(rb.velocity.x, 6.5f);
+            fuel -= 5.0f;
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D coll) {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            Debug.Log("Collision with ground!");
-        }
-
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Bean")) {
-             Destroy(coll.gameObject);
-            
-            Debug.Log("Collision with bean!");
-            
-            JetpackController jetpackController = GetComponent<JetpackController>();
-            if (jetpackController != null) {
-                jetpackController.ActivateJetpack();
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Perk")) {
+            Destroy(coll.gameObject);
+            if (fuel < 100.0f) {
+                fuel += 100.0f - fuel;
             }
         }
     }
