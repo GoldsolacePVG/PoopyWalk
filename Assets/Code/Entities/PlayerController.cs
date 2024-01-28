@@ -13,7 +13,16 @@ public class PlayerController : MonoBehaviour
     public ScreenPoopScript screen;
     public float speed = 7f, fuel = 0.0f;
     private bool grounded = false;
+    public bool timeslow;
+    public float timetoslow;
+    void Start(){
 
+        timeslow=false;
+        timetoslow=500;
+
+    }
+    
+    
     void Update() {
         if (Input.GetKey(KeyCode.A)) {
             this.transform.position += Vector3.left * speed * Time.deltaTime;
@@ -29,6 +38,17 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Running", true);
         }else{
             animator.SetBool("Running", false);
+        }
+        
+        
+        if(timeslow){
+            timetoslow--;
+            if(timetoslow<=0){
+                timeslow=false;
+                timetoslow=500;
+                speed=7f;
+            }
+
         }
         
         Vector3 position = player.transform.position;
@@ -60,5 +80,16 @@ public class PlayerController : MonoBehaviour
         if (coll.gameObject.CompareTag("PaperPerk")) {
             screen.isPaper = true;
         }
+
+    
     }
+
+
+       public void OnTriggerEnter2D(Collider2D coll) {
+        if (coll.gameObject.layer == LayerMask.NameToLayer("boss")) {
+           speed=1;
+           timeslow=true;
+           
+            }
+        }
 }
