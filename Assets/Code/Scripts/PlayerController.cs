@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public float speed = 7f, fuel = 0.0f;
     private bool grounded = false;
+    private float start_speed;
+
+    void Start(){
+        start_speed = speed;
+    }
 
     void Update() {
         if (Input.GetKey(KeyCode.A)) {
@@ -42,12 +47,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter2D(Collision2D coll) {
+    public void OnTriggerEnter2D(Collider2D coll) {
+        
         if (coll.gameObject.layer == LayerMask.NameToLayer("Perk")) {
             Destroy(coll.gameObject);
             if (fuel < 100.0f) {
                 fuel += 100.0f - fuel;
             }
+        }
+
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+            speed = start_speed/2.0f;
+        }else{
+            speed = start_speed;
         }
     }
 }
