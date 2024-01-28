@@ -2,53 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
-    public GameObject fartVFX;
+public class PlayerController : MonoBehaviour {
+    
+    public GameObject fartVFX, pauseMenu;
     public Transform player;
     public SpriteRenderer sprite;
     public Animator animator;
     public LayerMask groundMask;
     public Rigidbody2D rb;
     public ScreenPoopScript screen;
-    public float speed = 7f, fuel = 0.0f;
+    public float speed = 7.0f, fuel = 0.0f;
     private bool grounded = false;
+    public bool isPause = false;
     public bool timeslow;
     public float timetoslow;
+    
     void Start(){
-
-        timeslow=false;
-        timetoslow=500;
-
+        timeslow = false;
+        timetoslow = 500.0f;
     }
     
     
     void Update() {
-        if (Input.GetKey(KeyCode.A)) {
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !isPause) {
             this.transform.position += Vector3.left * speed * Time.deltaTime;
             sprite.flipX = true;
         }
 
-        if (Input.GetKey(KeyCode.D)) {
+        if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && !isPause) {
             this.transform.position += Vector3.right * speed * Time.deltaTime;
             sprite.flipX = false;
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) {
             animator.SetBool("Running", true);
         }else{
             animator.SetBool("Running", false);
         }
         
-        
         if(timeslow){
             timetoslow--;
-            if(timetoslow<=0){
-                timeslow=false;
-                timetoslow=500;
-                speed=7f;
+            if(timetoslow <= 0){
+                timeslow = false;
+                timetoslow = 500;
+                speed = 7f;
             }
-
         }
         
         Vector3 position = player.transform.position;
@@ -62,6 +60,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 6.5f);
             fuel -= 5.0f;
             Instantiate(fartVFX, this.transform.position, Quaternion.identity);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P)) {
+            Time.timeScale = 0.0f;
+            isPause = true;
+            pauseMenu.SetActive(true);
         }
     }
 
@@ -80,16 +84,11 @@ public class PlayerController : MonoBehaviour
         if (coll.gameObject.CompareTag("PaperPerk")) {
             screen.isPaper = true;
         }
-
-    
     }
-
-
-       public void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("boss")) {
-           speed=1;
-           timeslow=true;
-           
-            }
-        }
+    public void OnTriggerEnter2D(Collider2D coll) {
+         if (coll.gameObject.layer == LayerMask.NameToLayer("boss")) {
+            speed = 1;
+            timeslow=true;
+         }
+    }
 }
