@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4932345215054586153}
   - component: {fileID: 9046767884239221136}
   - component: {fileID: 2665549223555262266}
+  - component: {fileID: 2850129273570182243}
   m_Layer: 0
   m_Name: GasParticles
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.6598281, y: -0.25421724, z: -0.25421697, w: 0.6598289}
   m_LocalPosition: {x: -0.176, y: -0.293, z: -0.001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4839,3 +4840,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2850129273570182243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047920684781648012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36fc090f3739d849aa5201060a171ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

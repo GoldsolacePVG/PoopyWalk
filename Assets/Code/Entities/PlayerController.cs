@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject fartVFX;
     public Transform player;
     public SpriteRenderer sprite;
     public Animator animator;
     public LayerMask groundMask;
     public Rigidbody2D rb;
+    public ScreenPoopScript screen;
     public float speed = 7f, fuel = 0.0f;
     private bool grounded = false;
 
@@ -39,6 +41,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && fuel > 0.0f) {
             rb.velocity = new Vector2(rb.velocity.x, 6.5f);
             fuel -= 5.0f;
+            Instantiate(fartVFX, this.transform.position, Quaternion.identity);
         }
     }
 
@@ -48,6 +51,14 @@ public class PlayerController : MonoBehaviour
             if (fuel < 100.0f) {
                 fuel += 100.0f - fuel;
             }
+        }
+
+        if (coll.gameObject.CompareTag("PoopEnemy")) {
+            screen.isDirty = true;
+        }
+
+        if (coll.gameObject.CompareTag("PaperPerk")) {
+            screen.isPaper = true;
         }
     }
 }
