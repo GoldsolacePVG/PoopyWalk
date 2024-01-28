@@ -15,6 +15,7 @@ public class TimeScript : MonoBehaviour
           instance = this;
     }
 
+
     private void UpdateTimer(float timer) {
         int minutes = Mathf.FloorToInt(timer / 60);
         int seconds = Mathf.FloorToInt(timer % 60);

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
-    
+
     public GameObject fartVFX, pauseMenu;
     public Transform player;
     public SpriteRenderer sprite;
@@ -12,7 +12,20 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundMask;
     public Rigidbody2D rb;
     public ScreenPoopScript screen;
-    public float speed = 7.0f, fuel = 0.0f;
+    // public AudioSource[] audio;
+    // public AudioClip[] audio;
+    /*
+    audio[0] = pedo impulso
+    audio[1] = kaka
+    audio[2] = ouch
+    audio[3] = blablabla
+    audio[4] = closing_door
+    audio[5] = pedo menu
+    audio[6] = Musica menu
+    audio[7] = musica tutorial
+    audio[8] = musica level 1
+    */
+    public float speed = 7.0f, fuel = 0.0f, force = 9.0f;
     private bool grounded = false;
     public bool isPause = false;
     public bool timeslow;
@@ -42,7 +55,7 @@ public class PlayerController : MonoBehaviour {
         }else{
             animator.SetBool("Running", false);
         }
-        
+
         if(timeslow){
             timetoslow--;
             if(timetoslow <= 0){
@@ -53,16 +66,17 @@ public class PlayerController : MonoBehaviour {
         }
 
         Vector3 position = player.transform.position;
-        position.y = Mathf.Clamp(position.y, -2.0f, 4.0f);
+        position.y = Mathf.Clamp(position.y, -2.0f, 11.0f);
         transform.position = position;
 
         grounded = Physics2D.Raycast(this.transform.position, Vector2.down, 2.0f, groundMask.value);
         animator.SetBool("Flying", !grounded);
 
         if (Input.GetKeyDown(KeyCode.Space) && fuel > 0.0f) {
-            rb.velocity = new Vector2(rb.velocity.x, 6.5f);
+            rb.velocity = new Vector2(rb.velocity.x, force);
             fuel -= 5.0f;
             Instantiate(fartVFX, this.transform.position, Quaternion.identity);
+            // audio[0].PlayOneShot(audio[0], 1.0f);
         }
 
         if (Input.GetKeyDown(KeyCode.P)) {
@@ -109,7 +123,8 @@ public class PlayerController : MonoBehaviour {
           coll.GetComponent<Animator>().SetTrigger("Arrival");
           TimeScript.instance.stopTimer = true;
           speed = 0.0f;
-          SceneManager.LoadScene(2);
+          fuel=0.0f;
+          // SceneManager.LoadScene(2);
         }
         // }
         // public void OnTriggerEnter2D(Collider2D coll)
