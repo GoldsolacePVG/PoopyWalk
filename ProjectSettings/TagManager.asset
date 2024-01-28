@@ -6,6 +6,9 @@ TagManager:
   tags:
   - PoopEnemy
   - PaperPerk
+  - Door
+  - SodaPerk
+  - CorkPerk
   layers:
   - Default
   - TransparentFX

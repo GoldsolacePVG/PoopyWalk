@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private bool grounded = false;
     public bool timeslow;
     public float timetoslow;
+
+
     void Start(){
 
         timeslow=false;
@@ -66,11 +68,12 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnCollisionEnter2D(Collision2D coll) {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Perk")) {
-            Destroy(coll.gameObject);
-            if (fuel < 100.0f) {
-                fuel += 100.0f - fuel;
-            }
+
+        if(coll.gameObject.CompareTag("SodaPerk")){
+          Destroy(coll.gameObject);
+          if (fuel < 100.0f) {
+              fuel += 100.0f - fuel;
+          }
         }
 
         if (coll.gameObject.CompareTag("PoopEnemy")) {
@@ -78,7 +81,12 @@ public class PlayerController : MonoBehaviour
         }
 
         if (coll.gameObject.CompareTag("PaperPerk")) {
+            Destroy(coll.gameObject);
             screen.isPaper = true;
+        }
+        if (coll.gameObject.CompareTag("CorkPerk")) {
+          Destroy(coll.gameObject);
+          TimeScript.instance.levelOneCountdown += 5.0f;
         }
 
 
