@@ -16,7 +16,6 @@ public class TimeScript : MonoBehaviour
           instance = this;
     }
 
-
     private void UpdateTimer(float timer) {
         int minutes = Mathf.FloorToInt(timer / 60);
         int seconds = Mathf.FloorToInt(timer % 60);
@@ -38,8 +37,6 @@ public class TimeScript : MonoBehaviour
         if (levelOneCountdown > 0.0f && !stopTimer) {
             levelOneCountdown -= Time.deltaTime;
             UpdateTimer(levelOneCountdown);
-        }else{
-            Debug.Log("Game Over!");
         }
     }
 }

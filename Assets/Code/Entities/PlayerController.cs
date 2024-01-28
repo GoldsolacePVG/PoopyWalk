@@ -12,36 +12,28 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundMask;
     public Rigidbody2D rb;
     public ScreenPoopScript screen;
-    public AudioSource[] audio;
-    // public AudioClip[] audio;
-    /*
-    audio[0] = pedo impulso
-    audio[1] = kaka
-    audio[2] = ouch
-    audio[3] = blablabla
-    audio[4] = closing_door
-    audio[5] = pedo menu
-    audio[6] = Musica menu
-    audio[7] = musica tutorial
-    audio[8] = musica level 1
-    */
-    public float speed = 7.0f, fuel = 0.0f, force = 7.0f;
-    public GameDataController gm;
+    public float speed = 7.0f, fuel = 0.0f;
     private bool grounded = false;
     public bool isPause = false;
     public bool timeslow;
     public float timetoslow;
-    public GameObject corktime;
-    public bool count;
-    public float countime;
+
+    public AudioSource[] audio;
+    public AudioClip[] audioclip;
+    /*
+    1 -- Pedo impulso
+    2 -- Kaka
+    3 -- ouch
+    4 -- Pedo menu
+    5 -- Closing Door
+    */
+
 
     void Start(){
         timeslow = false;
         timetoslow = 550.0f;
-        corktime.SetActive(false);
-        countime=0;
-        count=false;
     }
+
 
     void Update() {
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !isPause) {
@@ -70,18 +62,17 @@ public class PlayerController : MonoBehaviour {
         }
 
         Vector3 position = player.transform.position;
-        position.y = Mathf.Clamp(position.y, -2.0f, 11.0f);
+        position.y = Mathf.Clamp(position.y, -2.0f, 10.0f);
         transform.position = position;
 
         grounded = Physics2D.Raycast(this.transform.position, Vector2.down, 2.0f, groundMask.value);
         animator.SetBool("Flying", !grounded);
 
         if (Input.GetKeyDown(KeyCode.Space) && fuel > 0.0f) {
-            rb.velocity = new Vector2(rb.velocity.x, force);
-            fuel -= 10.0f;
+            rb.velocity = new Vector2(rb.velocity.x, 8.0f);
+            fuel -= 5.0f;
             Instantiate(fartVFX, this.transform.position, Quaternion.identity);
-            // audio[0].PlayOneShot(audio[0], 1.0f);
-            audio[0].Play();
+            audio[0].PlayOneShot(audioclip[0]);
         }
 
         if (Input.GetKeyDown(KeyCode.P)) {
@@ -89,16 +80,14 @@ public class PlayerController : MonoBehaviour {
             isPause = true;
             pauseMenu.SetActive(true);
         }
-        if(count){
-          countime++;
-          if(countime>=500){
+    }
 
-            corktime.SetActive(false);
-            count=false;
-            countime=0;
-          }
-
-        }
+    public IEnumerator ChangeScenes()
+    {
+      yield return new WaitForSeconds(1.0f);
+      audio[0].PlayOneShot(audioclip[1]);
+      yield return new WaitForSeconds(2.5f);
+      SceneManager.LoadScene(2);
     }
 
     public void OnCollisionEnter2D(Collision2D coll) {
@@ -121,47 +110,36 @@ public class PlayerController : MonoBehaviour {
         if (coll.gameObject.CompareTag("CorkPerk")) {
           Destroy(coll.gameObject);
           TimeScript.instance.levelOneCountdown += 5.0f;
-          corktime.SetActive(true);
-          count=true;
         }
     }
 
-      IEnumerator poopsound()
-        {
-            yield return new WaitForSeconds(1.0f);
-            audio[1].Play();
-          }
-       public void OnTriggerEnter2D(Collider2D coll) {
-         if(coll.gameObject.CompareTag("HumanEnemy"))
-         {
-           speed = 1.0f;
-           timeslow = true;
-         }
+    public void OnTriggerEnter2D(Collider2D coll) {
+      if(coll.gameObject.CompareTag("HumanEnemy")) {
+        speed = 1.0f;
+        timeslow = true;
+      }
 
-        if(coll.gameObject.CompareTag("Door")){
-          coll.GetComponent<Animator>().SetTrigger("Arrival");
-          TimeScript.instance.stopTimer = true;
-          if(GameManager.game.isLevel1){
+      if(coll.gameObject.CompareTag("Door")){
+        coll.GetComponent<Animator>().SetTrigger("Arrival");
+        TimeScript.instance.stopTimer = true;
+        if(GameManager.game.isLevel1){
             float aux_time = TimeScript.instance.ObtainTime();
             int minutes = Mathf.FloorToInt(aux_time / 60);
             int seconds = Mathf.FloorToInt(aux_time % 60);
             if (minutes < GameManager.game.minutes) {
                 GameManager.game.minutes = minutes;
                 GameManager.game.seconds = seconds;
-                gm.DataSave();
             }else if (minutes == GameManager.game.minutes) {
                 if (seconds < GameManager.game.seconds) {
                     GameManager.game.minutes = minutes;
                     GameManager.game.seconds = seconds;
-                    gm.DataSave();
                 }
             }
-          }
-          speed = 0.0f;
-          fuel = 0.0f;
-          audio[4].Play();
-          StartCoroutine(poopsound());
-          SceneManager.LoadScene(1);
         }
-        }
+        speed = 0.0f;
+        // Debug.Log("GameOver");
+        audio[0].PlayOneShot(audioclip[4]);
+        StartCoroutine(ChangeScenes());
+      }
+    }
 }
