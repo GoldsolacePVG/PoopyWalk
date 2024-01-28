@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour {
          }
 
         if(coll.gameObject.CompareTag("Door")){
+            
           coll.GetComponent<Animator>().SetTrigger("Arrival");
           TimeScript.instance.stopTimer = true;
           if(GameManager.game.isLevel1){
@@ -157,11 +158,12 @@ public class PlayerController : MonoBehaviour {
                 }
             }
           }
+          GameManager.game.isLevel1 = false;
           speed = 0.0f;
           fuel = 0.0f;
           audio[4].Play();
           StartCoroutine(poopsound());
           SceneManager.LoadScene(1);
         }
-        }
+       }
 }
