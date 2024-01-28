@@ -12,11 +12,13 @@ public class MovementEnemy : MonoBehaviour
     public bool informationInFront;
     public bool facingRight = true;
     public bool talking = false;
+    public GameObject bread;
 
     // Start is called before the first frame update
     void Start()
     {
       talking = false;
+      bread.SetActive(false);
     }
 
     // Update is called once per frame
@@ -48,6 +50,7 @@ public class MovementEnemy : MonoBehaviour
       if(other.gameObject.CompareTag("Player"))
       {
         talking = true;
+        bread.SetActive(true);
       }
     }
 }
