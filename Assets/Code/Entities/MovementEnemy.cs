@@ -11,11 +11,12 @@ public class MovementEnemy : MonoBehaviour
     public Transform frontController;
     public bool informationInFront;
     public bool facingRight = true;
+    public bool talking = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+      talking = false;
     }
 
     // Update is called once per frame
@@ -23,11 +24,16 @@ public class MovementEnemy : MonoBehaviour
     {
         rb.velocity = new Vector2(velocity, rb.velocity.y);
         informationInFront = Physics2D.Raycast(frontController.position, transform.right, distanceInFront, front);
-    
+
         if (informationInFront)
         {
             Flip();
-        }    
+        }
+        if(talking)
+        {
+          velocity = 0.0f;
+        }
+
     }
 
     public void Flip()
@@ -35,5 +41,13 @@ public class MovementEnemy : MonoBehaviour
         facingRight = !facingRight;
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
         velocity *= -1;
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+      if(other.gameObject.CompareTag("Player"))
+      {
+        talking = true;
+      }
     }
 }
