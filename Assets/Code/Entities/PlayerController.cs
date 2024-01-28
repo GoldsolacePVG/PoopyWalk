@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
         timetoslow=500;
 
     }
-    
-    
+
+
     void Update() {
         if (Input.GetKey(KeyCode.A)) {
             this.transform.position += Vector3.left * speed * Time.deltaTime;
@@ -39,8 +39,8 @@ public class PlayerController : MonoBehaviour
         }else{
             animator.SetBool("Running", false);
         }
-        
-        
+
+
         if(timeslow){
             timetoslow--;
             if(timetoslow<=0){
@@ -50,14 +50,14 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        
+
         Vector3 position = player.transform.position;
         position.y = Mathf.Clamp(position.y, -2.0f, 4.0f);
         transform.position = position;
-        
+
         grounded = Physics2D.Raycast(this.transform.position, Vector2.down, 2.0f, groundMask.value);
         animator.SetBool("Flying", !grounded);
-        
+
         if (Input.GetKeyDown(KeyCode.Space) && fuel > 0.0f) {
             rb.velocity = new Vector2(rb.velocity.x, 6.5f);
             fuel -= 5.0f;
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
             screen.isPaper = true;
         }
 
-    
+
     }
 
 
@@ -89,7 +89,10 @@ public class PlayerController : MonoBehaviour
         if (coll.gameObject.layer == LayerMask.NameToLayer("boss")) {
            speed=1;
            timeslow=true;
-           
+
             }
+        if(coll.gameObject.CompareTag("Door")){
+          coll.GetComponent<Animator>().SetTrigger("Arrival");
+        }
         }
 }
