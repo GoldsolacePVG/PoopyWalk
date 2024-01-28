@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
 
-        timeslow=false;
-        timetoslow=500;
+        timeslow = false;
+        timetoslow = 550.0f;
 
     }
 
@@ -48,9 +49,8 @@ public class PlayerController : MonoBehaviour
             if(timetoslow<=0){
                 timeslow=false;
                 timetoslow=500;
-                speed=7f;
+                speed = 7.0f;
             }
-
         }
 
         Vector3 position = player.transform.position;
@@ -94,13 +94,23 @@ public class PlayerController : MonoBehaviour
 
 
        public void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("boss")) {
-           speed=1;
-           timeslow=true;
+         if(coll.gameObject.CompareTag("HumanEnemy"))
+         {
+           speed = 1.0f;
+           timeslow = true;
+         }
 
-            }
         if(coll.gameObject.CompareTag("Door")){
           coll.GetComponent<Animator>().SetTrigger("Arrival");
+          TimeScript.instance.stopTimer = true;
+          speed = 0.0f;
+          SceneManager.LoadScene(2);
         }
+        // }
+        // public void OnTriggerEnter2D(Collider2D coll)
+        // {
+          // if(coll.gameObject.CompareTag("Door")){
+          //   speed = 0.0f;
+          // }
         }
 }
