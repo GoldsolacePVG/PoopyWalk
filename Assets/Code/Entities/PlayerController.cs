@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public ScreenPoopScript screen;
 
     // Player movement variables
-    public float speed = 7f, fuel = 100.0f;  // Initialized with 100 units of fuel.
+    public float speed = 7f, fuel = 0.0f;  // Initialized with 100 units of fuel.
 
     // Grounded state and time-related variables
     private bool grounded = false;
