@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour {
         }
         if(count){
           countime++;
-          if(countime>=300){
+          if(countime>=500){
 
             corktime.SetActive(false);
             count=false;
@@ -128,7 +128,11 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-
+      IEnumerator poopsound()
+        {
+            yield return new WaitForSeconds(1.0f);
+            audio[1].Play();
+          }
        public void OnTriggerEnter2D(Collider2D coll) {
          if(coll.gameObject.CompareTag("HumanEnemy"))
          {
@@ -142,7 +146,8 @@ public class PlayerController : MonoBehaviour {
           speed = 0.0f;
           fuel=0.0f;
           audio[4].Play();
-          audio[1].Play();
+          StartCoroutine(poopsound());
+
           // SceneManager.LoadScene(2);
         }
         // }
