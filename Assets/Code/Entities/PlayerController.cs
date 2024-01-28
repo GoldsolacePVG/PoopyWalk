@@ -12,19 +12,17 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundMask;
     public Rigidbody2D rb;
     public ScreenPoopScript screen;
+    public GameDataController gm;
     public float speed = 7.0f, fuel = 0.0f;
     private bool grounded = false;
     public bool isPause = false;
     public bool timeslow;
     public float timetoslow;
 
-
-
     void Start(){
         timeslow = false;
         timetoslow = 550.0f;
     }
-
 
     void Update() {
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !isPause) {
@@ -111,15 +109,17 @@ public class PlayerController : MonoBehaviour {
             if (minutes < GameManager.game.minutes) {
                 GameManager.game.minutes = minutes;
                 GameManager.game.seconds = seconds;
+                gm.DataSave();
             }else if (minutes == GameManager.game.minutes) {
                 if (seconds < GameManager.game.seconds) {
                     GameManager.game.minutes = minutes;
                     GameManager.game.seconds = seconds;
+                    gm.DataSave();
                 }
             }
         }
         speed = 0.0f;
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
       }
     }
 }

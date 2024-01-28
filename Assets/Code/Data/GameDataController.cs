@@ -13,23 +13,26 @@ public class GameDataController : MonoBehaviour
     usedFile = Application.dataPath + "/gameData.json";
   }
 
-  private void DataLoad() {
+  public void DataLoad() {
     if (File.Exists(usedFile)) {
       string content = File.ReadAllText(usedFile);
       gameData = JsonUtility.FromJson<GameData>(content);
       GameManager.game.minutes = gameData.minutes;
       GameManager.game.seconds = gameData.seconds;
+      Debug.Log("Loaded!");
     }else{
       Debug.LogError("File doesn't exist");
+      File.Create(usedFile);
     }
   }
 
-  private void DataSave() {
+  public void DataSave() {
     GameData newData = new GameData() {
       minutes = GameManager.game.minutes, 
       seconds = GameManager.game.seconds
     };
     string JSONstring = JsonUtility.ToJson(newData);
+    Debug.Log(JSONstring);
     File.WriteAllText(usedFile, JSONstring);
     Debug.Log("Saved Data!");
   }
