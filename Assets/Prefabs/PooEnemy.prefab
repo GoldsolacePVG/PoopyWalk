@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7191507873496180487}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PooEnemy
-  m_TagString: Untagged
+  m_TagString: PoopEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 6014705700003680640}
   - component: {fileID: 2449967678644181044}
   - component: {fileID: 1990090095986674183}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PoopEnemy-Sheet_0
-  m_TagString: Untagged
+  m_TagString: PoopEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

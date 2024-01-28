@@ -9,17 +9,18 @@ TagManager:
   - Door
   - SodaPerk
   - CorkPerk
+  - HumanEnemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - Ground
   - Perk
-  - 
-  - 
+  - Wall
+  - PoopEnemy
   - 
   - 
   - 
