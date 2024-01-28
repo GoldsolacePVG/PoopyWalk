@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class SceneManagement : MonoBehaviour
 {
   public void ChangeScene(int sceneValue) {
+    if (sceneValue == 6) {
+      GameManager.game.isLevel1 = true;
+    }
     SceneManager.LoadScene(sceneValue);
   }
 

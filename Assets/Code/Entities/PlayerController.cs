@@ -112,17 +112,23 @@ public class PlayerController : MonoBehaviour {
           TimeScript.instance.levelOneCountdown += 5.0f;
         }
     }
+      IEnumerator poopsound()
+        {
+            yield return new WaitForSeconds(1.0f);
+            audio[1].Play();
+          }
+       public void OnTriggerEnter2D(Collider2D coll) {
+         if(coll.gameObject.CompareTag("HumanEnemy"))
+         {
+           speed = 1.0f;
+           timeslow = true;
+         }
 
-    public void OnTriggerEnter2D(Collider2D coll) {
-      if(coll.gameObject.CompareTag("HumanEnemy")) {
-        speed = 1.0f;
-        timeslow = true;
-      }
-
-      if(coll.gameObject.CompareTag("Door")){
-        coll.GetComponent<Animator>().SetTrigger("Arrival");
-        TimeScript.instance.stopTimer = true;
-        if(GameManager.game.isLevel1){
+        if(coll.gameObject.CompareTag("Door")){
+            
+          coll.GetComponent<Animator>().SetTrigger("Arrival");
+          TimeScript.instance.stopTimer = true;
+          if(GameManager.game.isLevel1){
             float aux_time = TimeScript.instance.ObtainTime();
             int minutes = Mathf.FloorToInt(aux_time / 60);
             int seconds = Mathf.FloorToInt(aux_time % 60);
@@ -136,7 +142,9 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
+        GameManager.game.isLevel1 = false;
         speed = 0.0f;
+          fuel = 0.0f;
         // Debug.Log("GameOver");
         audio[0].PlayOneShot(audioclip[4]);
         StartCoroutine(ChangeScenes());

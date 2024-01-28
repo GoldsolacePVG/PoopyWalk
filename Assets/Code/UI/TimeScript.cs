@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class TimeScript : MonoBehaviour
 {
     public Text timerText;
-    private float initialTime = 120.0f;
-    public float levelOneCountdown = 120.0f;
+    private float initialTime = 90.0f;
+    public float levelOneCountdown = 90.0f;
     public bool stopTimer = false;
     public static TimeScript instance;
     void Start() {
@@ -37,6 +37,9 @@ public class TimeScript : MonoBehaviour
         if (levelOneCountdown > 0.0f && !stopTimer) {
             levelOneCountdown -= Time.deltaTime;
             UpdateTimer(levelOneCountdown);
+        }else{
+            Debug.Log("Tutorial pass!");
+            SceneManager.LoadScene(1);
         }
     }
 }

@@ -1637,7 +1637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minutes: 1
   seconds: 30
-  isLevel1: 1
+  isLevel1: 0
 --- !u!4 &1672522083
 Transform:
   m_ObjectHideFlags: 0
