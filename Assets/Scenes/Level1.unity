@@ -4716,7 +4716,7 @@ RectTransform:
   m_Father: {fileID: 1148279968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}ç
   m_AnchoredPosition: {x: 0, y: 0.000011444}
   m_SizeDelta: {x: 160, y: 37.8016}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4733,10 +4733,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.97735846, g: 0.97182626, b: 0.97182626, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4752,7 +4752,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 0
   m_Text: 00:00
 --- !u!222 &1069778607
 CanvasRenderer:
@@ -5099,6 +5099,21 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6544537066800407256, guid: 3431b771a8454e04baae421103b21448, type: 3}
   m_PrefabInstance: {fileID: 2132325107}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1148279971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908818261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80820fce91e0fd2479c5b4aec20dad81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1069778606}
+  levelOneCountdown: 120
+  stopTimer: 0
 --- !u!1 &1153102464
 GameObject:
   m_ObjectHideFlags: 0
@@ -6226,6 +6241,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1123607680437339841, guid: cd60e5e2f8614204fb542cf61c87c940, type: 3}
+      propertyPath: gm
+      value: 
+      objectReference: {fileID: 762947855}
     - target: {fileID: 1123607680437339841, guid: cd60e5e2f8614204fb542cf61c87c940, type: 3}
       propertyPath: fuel
       value: 100
@@ -8260,7 +8279,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6544537066800407256, guid: 3431b771a8454e04baae421103b21448, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1069778605}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 757938656713804103, guid: 3431b771a8454e04baae421103b21448, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1148279971}
   m_SourcePrefab: {fileID: 100100000, guid: 3431b771a8454e04baae421103b21448, type: 3}
 --- !u!1001 &2147011098
 PrefabInstance:

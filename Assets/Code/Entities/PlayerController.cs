@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
     audio[8] = musica level 1
     */
     public float speed = 7.0f, fuel = 0.0f, force = 7.0f;
+    public GameDataController gm;
     private bool grounded = false;
     public bool isPause = false;
     public bool timeslow;
@@ -41,7 +42,6 @@ public class PlayerController : MonoBehaviour {
         countime=0;
         count=false;
     }
-
 
     void Update() {
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !isPause) {
@@ -124,8 +124,6 @@ public class PlayerController : MonoBehaviour {
           corktime.SetActive(true);
           count=true;
         }
-
-
     }
 
       IEnumerator poopsound()
@@ -143,18 +141,27 @@ public class PlayerController : MonoBehaviour {
         if(coll.gameObject.CompareTag("Door")){
           coll.GetComponent<Animator>().SetTrigger("Arrival");
           TimeScript.instance.stopTimer = true;
+          if(GameManager.game.isLevel1){
+            float aux_time = TimeScript.instance.ObtainTime();
+            int minutes = Mathf.FloorToInt(aux_time / 60);
+            int seconds = Mathf.FloorToInt(aux_time % 60);
+            if (minutes < GameManager.game.minutes) {
+                GameManager.game.minutes = minutes;
+                GameManager.game.seconds = seconds;
+                gm.DataSave();
+            }else if (minutes == GameManager.game.minutes) {
+                if (seconds < GameManager.game.seconds) {
+                    GameManager.game.minutes = minutes;
+                    GameManager.game.seconds = seconds;
+                    gm.DataSave();
+                }
+            }
+          }
           speed = 0.0f;
-          fuel=0.0f;
+          fuel = 0.0f;
           audio[4].Play();
           StartCoroutine(poopsound());
-
-          // SceneManager.LoadScene(2);
+          SceneManager.LoadScene(1);
         }
-        // }
-        // public void OnTriggerEnter2D(Collider2D coll)
-        // {
-          // if(coll.gameObject.CompareTag("Door")){
-          //   speed = 0.0f;
-          // }
         }
 }
