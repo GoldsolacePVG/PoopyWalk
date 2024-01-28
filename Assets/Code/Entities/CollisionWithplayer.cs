@@ -5,6 +5,7 @@ using UnityEngine;
 public class CollisionWithplayer : MonoBehaviour
 {
     public GameObject bocadillo;
+    public Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,13 @@ public class CollisionWithplayer : MonoBehaviour
         if (coll.gameObject.layer == LayerMask.NameToLayer("player")) {
            bocadillo.SetActive(true);
            Debug.Log("col");
+           RigidbodyConstraints2D constraints = rb.constraints;
+
+            
+            constraints |= RigidbodyConstraints2D.FreezePositionX;
+
+            
+            rb.constraints = constraints;
             }
         }
     }
