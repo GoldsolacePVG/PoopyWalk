@@ -12,14 +12,19 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundMask;
     public Rigidbody2D rb;
     public ScreenPoopScript screen;
+    public GameDataController gm;
     public float speed = 7.0f, fuel = 0.0f;
     private bool grounded = false;
+    public bool timetopluge; 
+    public float plugtime;
     public bool isPause = false;
     public bool timeslow;
     public float timetoslow;
-
+    public GameObject plug;
     public AudioSource[] audio;
     public AudioClip[] audioclip;
+    
+    
     /*
     1 -- Pedo impulso
     2 -- Kaka
@@ -32,6 +37,9 @@ public class PlayerController : MonoBehaviour {
     void Start(){
         timeslow = false;
         timetoslow = 550.0f;
+        plug.SetActive(false);
+        timetopluge = false;
+        plugtime = 300;
     }
 
 
@@ -59,6 +67,19 @@ public class PlayerController : MonoBehaviour {
                 timetoslow = 500;
                 speed = 7.0f;
             }
+        }
+
+        if (timetopluge)
+        {
+            plugtime--;
+            if (plugtime <= 0)
+            {
+
+                timetopluge = false;
+                plugtime = 300;
+                plug.SetActive(false);
+            }
+
         }
 
         Vector3 position = player.transform.position;
@@ -110,6 +131,8 @@ public class PlayerController : MonoBehaviour {
         if (coll.gameObject.CompareTag("CorkPerk")) {
           Destroy(coll.gameObject);
           TimeScript.instance.levelOneCountdown += 5.0f;
+          plug.SetActive(true);
+          timetopluge = true;
         }
     }
       IEnumerator poopsound()
@@ -135,19 +158,21 @@ public class PlayerController : MonoBehaviour {
             if (minutes < GameManager.game.minutes) {
                 GameManager.game.minutes = minutes;
                 GameManager.game.seconds = seconds;
+                gm.DataSave();
             }else if (minutes == GameManager.game.minutes) {
                 if (seconds < GameManager.game.seconds) {
                     GameManager.game.minutes = minutes;
                     GameManager.game.seconds = seconds;
+                    gm.DataSave();
                 }
             }
-        }
-        GameManager.game.isLevel1 = false;
-        speed = 0.0f;
+          }
+          GameManager.game.isLevel1 = false;
+          speed = 0.0f;
           fuel = 0.0f;
-        // Debug.Log("GameOver");
-        audio[0].PlayOneShot(audioclip[4]);
-        StartCoroutine(ChangeScenes());
-      }
+           // Debug.Log("GameOver");
+           audio[0].PlayOneShot(audioclip[4]);
+           StartCoroutine(ChangeScenes());
+        }
     }
 }
