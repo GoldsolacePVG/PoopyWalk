@@ -93,29 +93,33 @@ public class PlayerController : MonoBehaviour {
           Destroy(coll.gameObject);
           TimeScript.instance.levelOneCountdown += 5.0f;
         }
-
-
     }
 
-
-       public void OnTriggerEnter2D(Collider2D coll) {
-         if(coll.gameObject.CompareTag("HumanEnemy"))
-         {
-           speed = 1.0f;
-           timeslow = true;
-         }
-
-        if(coll.gameObject.CompareTag("Door")){
-          coll.GetComponent<Animator>().SetTrigger("Arrival");
-          TimeScript.instance.stopTimer = true;
-          speed = 0.0f;
-          SceneManager.LoadScene(2);
+    public void OnTriggerEnter2D(Collider2D coll) {
+      if(coll.gameObject.CompareTag("HumanEnemy")) {
+        speed = 1.0f;
+        timeslow = true;
+      }
+      
+      if(coll.gameObject.CompareTag("Door")){
+        coll.GetComponent<Animator>().SetTrigger("Arrival");
+        TimeScript.instance.stopTimer = true;
+        if(GameManager.game.isLevel1){
+            float aux_time = TimeScript.instance.ObtainTime();
+            int minutes = Mathf.FloorToInt(aux_time / 60);
+            int seconds = Mathf.FloorToInt(aux_time % 60);
+            if (minutes < GameManager.game.minutes) {
+                GameManager.game.minutes = minutes;
+                GameManager.game.seconds = seconds;
+            }else if (minutes == GameManager.game.minutes) {
+                if (seconds < GameManager.game.seconds) {
+                    GameManager.game.minutes = minutes;
+                    GameManager.game.seconds = seconds;
+                }
+            }
         }
-        // }
-        // public void OnTriggerEnter2D(Collider2D coll)
-        // {
-          // if(coll.gameObject.CompareTag("Door")){
-          //   speed = 0.0f;
-          // }
-        }
+        speed = 0.0f;
+        SceneManager.LoadScene(2);
+      }
+    }
 }

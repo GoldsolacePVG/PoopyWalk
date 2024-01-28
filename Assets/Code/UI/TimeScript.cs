@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TimeScript : MonoBehaviour
 {
     public Text timerText;
+    private float initialTime = 120.0f;
     public float levelOneCountdown = 120.0f;
     public bool stopTimer = false;
     public static TimeScript instance;
@@ -22,6 +23,10 @@ public class TimeScript : MonoBehaviour
             timerText.color = Color.red;
         }
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public float ObtainTime() {
+        return initialTime - levelOneCountdown;
     }
 
     private void GameOver(){
