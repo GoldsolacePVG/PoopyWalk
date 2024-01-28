@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundMask;
     public Rigidbody2D rb;
     public ScreenPoopScript screen;
-    // public AudioSource[] audio;
+    public AudioSource[] audio;
     // public AudioClip[] audio;
     /*
     audio[0] = pedo impulso
@@ -25,17 +25,21 @@ public class PlayerController : MonoBehaviour {
     audio[7] = musica tutorial
     audio[8] = musica level 1
     */
-    public float speed = 7.0f, fuel = 0.0f, force = 9.0f;
+    public float speed = 7.0f, fuel = 0.0f, force = 7.0f;
     private bool grounded = false;
     public bool isPause = false;
     public bool timeslow;
     public float timetoslow;
-
-
+    public GameObject corktime;
+    public bool count;
+    public float countime;
 
     void Start(){
         timeslow = false;
         timetoslow = 550.0f;
+        corktime.SetActive(false);
+        countime=0;
+        count=false;
     }
 
 
@@ -74,15 +78,26 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space) && fuel > 0.0f) {
             rb.velocity = new Vector2(rb.velocity.x, force);
-            fuel -= 5.0f;
+            fuel -= 10.0f;
             Instantiate(fartVFX, this.transform.position, Quaternion.identity);
             // audio[0].PlayOneShot(audio[0], 1.0f);
+            audio[0].Play();
         }
 
         if (Input.GetKeyDown(KeyCode.P)) {
             Time.timeScale = 0.0f;
             isPause = true;
             pauseMenu.SetActive(true);
+        }
+        if(count){
+          countime++;
+          if(countime>=300){
+
+            corktime.SetActive(false);
+            count=false;
+            countime=0;
+          }
+
         }
     }
 
@@ -106,6 +121,8 @@ public class PlayerController : MonoBehaviour {
         if (coll.gameObject.CompareTag("CorkPerk")) {
           Destroy(coll.gameObject);
           TimeScript.instance.levelOneCountdown += 5.0f;
+          corktime.SetActive(true);
+          count=true;
         }
 
 
@@ -124,6 +141,8 @@ public class PlayerController : MonoBehaviour {
           TimeScript.instance.stopTimer = true;
           speed = 0.0f;
           fuel=0.0f;
+          audio[4].Play();
+          audio[1].Play();
           // SceneManager.LoadScene(2);
         }
         // }
