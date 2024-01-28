@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 668507544235018057}
   m_Layer: 0
   m_Name: Mainchar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 1123607680437339841}
   m_Layer: 0
   m_Name: CharacterSprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7c4932c44782749ac62ce3450155e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fartVFX: {fileID: 1047920684781648012, guid: e0b87dd7e1ab9714780c54f3e46278fa, type: 3}
   player: {fileID: 1512085622442277445}
   sprite: {fileID: 961126692724214194}
   animator: {fileID: 864433224747508184}
@@ -232,5 +233,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   rb: {fileID: 296707034497831909}
+  screen: {fileID: 0}
   speed: 7
   fuel: 0
